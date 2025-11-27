@@ -1,0 +1,61 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage{graphicx}
+\usepackage{amsmath}
+\usepackage{emoji}
+
+\title{Higher Derivatives}
+\author{Explained with Bugs}
+\date{}
+
+\begin{document}
+
+% Ordinary derivative.
+\DeclareRobustCommand{\der}[2]{\frac{\text{d} #1}{\text{d} #2}}
+
+% Partial derivative.
+\DeclareRobustCommand{\pder}[2]{\frac{\partial #1}{\partial #2}}
+
+% Higher ordinary derivative.
+\DeclareRobustCommand{\hder}[3]{\frac{\text{d}^#3 #1}{\text{d} #2^#3}}
+
+% Higher partial derivative.
+\DeclareRobustCommand{\hpder}[3]{\frac{\partial^#3 #1}{\partial #2^#3}}
+
+% Math shortcut for \emoji{bug}
+\DeclareRobustCommand{\bug}{\text{\emoji{bug}}}
+
+% Math shortcut for \emoji{snail}
+\DeclareRobustCommand{\snail}{\text{\emoji{snail}}}
+
+% Math shortcut for \emoji{ant}
+\DeclareRobustCommand{\ant}{\text{\emoji{ant}}}
+
+\maketitle
+
+This episode will be a quick one, though not the most intuitive. While there will be certain occasions in which simple pattern recognition will serve you well, the only true way to find a higher derivative---the result of differentiating a function with respect to a bug multiple times---is to just... do exactly what the description says!
+
+On the bright side, there are better ways to write such an operation. Surely, there is something wrong with you if you'd be willing to write it this way \footnote{To clarify, we took $\snail$ as a function of bug $\bug$ here.};
+$$\der{\der{\der{\snail}{\bug}}{\bug}}{\bug}$$
+We will be discussing two of these improved notations. Let's take $\snail$ as a function of $\bug$, then take the second derivative of it with respect to $\bug$;
+\begin{subequations}
+\begin{align}
+&\hder{\snail}{\bug}{2}     &\text{Leibniz} \\
+&\snail''                    &\text{Lagrange}
+\end{align}
+\end{subequations}
+The Leibniz notation is what we've been using thus far, as it is much easier to visualise. The Lagrange notation, on the other hand, is much more concise at the cost of comprehension. To summarise, in the former case, if I had a function $\snail(\bug)$, the $n$th derivative of it with respect to $\bug$ would be denoted as $\hder{\snail}{\bug}{n}$. In the latter case, it would instead be denoted as $\snail^{(n)}$ (or $\snail^{(n)}(\bug)$). Do not confuse this with an exponent---the degree is explicitly encased in parenthesis for this matter. Here, you'd typically use prime notation ($f'(x)$) to show up to the second or third derivative of your function, where the number of primes corresponds to the degree of the derivative. After that, it becomes ugly and time consuming to write all of those primes, so you may just write the degree directly, for example, $\snail^{(8)}$ could be the $8$th derivative of $\snail$ with respect to $\bug$.
+
+Now that we know how these work, let's take the second derivative of $\snail$ with respect to $\bug$. We will define $\snail$ as $\snail = 3\bug^2 + 2$ for this. Make sure you are familiar with the multivariable form at this point, which you can learn about in the last episode about \textit{Multivariable Differentiation}, as we will be using the chain rule as opposed to directly using the power rule from now on so we don't make any mistakes with non-linear, multivariable relationships.\footnote{Ironically, this is actually not required here, as this is not a multivariable relationship. However, thinking in this way will save you from many silly mistakes when bugs in your function depend on other bugs.}
+$$\hder{\snail}{\bug}{2} = \hpder{(3\bug^2)}{\bug}{2}$$
+Notice too how I've excluded the $2$ term, because $2$ is a constant and not a bug, thus any derivative of it with respect to a bug will equal to zero. We'll first just take the derivative of $\snail$ with respect to $\bug$. We'll take an ordinary derivative because $\bug$ is the only bug present in this relationship anyways, though a partial one would give the same result, of course.
+$$\der{\snail}{\bug} = \der{(3\bug^2)}{\bug}$$
+I've also excluded the $2$ term here, for the same reason as before. As for our $3\bug^2$ term, we can use the power rule, which we've been frequently using for the last two episodes. You better know how to do it by now...
+$$\der{\snail}{\bug} = 6\bug$$
+Great, now we can just take the derivative of our result with respect to $\bug$, as we were taking the second derivative originally!
+$$\hder{\snail}{\bug}{2} = \pder{(6\bug)}{\bug}$$
+By the power rule, this turns into;
+$$\hder{\snail}{\bug}{2} = 6$$
+You'll notice that, at a certain point, taking a high enough derivative of a function with respect to its bug will always result in $0$, as all terms will eventually be reduced to constants.
+
+\end{document}
