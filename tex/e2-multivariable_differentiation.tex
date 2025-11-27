@@ -1,0 +1,75 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage{graphicx}
+\usepackage{amsmath}
+\usepackage{emoji}
+
+\title{Multivariable Differentiation}
+\author{Explained with Bugs}
+\date{}
+
+\begin{document}
+
+% Ordinary derivative. Term being differentiated is placed in the numerator of the fraction.
+\DeclareRobustCommand{\der}[2]{\frac{\text{d} #1}{\text{d} #2}}
+
+% Ordinary derivative. Term being differentiated is placed beside the fraction. 
+\DeclareRobustCommand{\ders}[2]{\frac{\text{d}}{\text{d} #2} #1}
+
+% Partial derivative. Term being differentiated is placed in the numerator of the fraction.
+\DeclareRobustCommand{\pder}[2]{\frac{\partial #1}{\partial #2}}
+
+% Partial derivative. Term being differentiated is placed beside the fraction. 
+\DeclareRobustCommand{\pders}[2]{\frac{\partial}{\partial #2} #1}
+
+% Math shortcut for \emoji{bug}
+\DeclareRobustCommand{\bug}{\text{\emoji{bug}}}
+
+% Math shortcut for \emoji{snail}
+\DeclareRobustCommand{\snail}{\text{\emoji{snail}}}
+
+% Math shortcut for \emoji{ant}
+\DeclareRobustCommand{\ant}{\text{\emoji{ant}}}
+
+% Math shortcut for \emoji{bee}
+\DeclareRobustCommand{\bee}{\text{\emoji{bee}}}
+
+\maketitle
+
+Say we have a bug, $\snail$, that depends on three other bugs; $\bug$, $\ant$ and $\bee$ (by now, we've established that the snail is the main function bug). We will define this relationship as follows;
+$$\snail = 3\bug^3 - 2\ant^2 + 4\bee$$
+Let's also define $\ant$ and $\bee$ as functions of $\bug$.
+$$\ant = \bug^2$$
+$$\bee = -\ant$$
+If you saw the last episode on \textit{Ordinary and Partial Derivatives}, you might've noticed that $\ant$ here has a different relationship with $\bug$---the ant and caterpillar colonies had some discussions since last time. This is some important lore in the Explained with Bugs universe, and is definitely not so I can do less math.
+
+Suppose $\bug$ is nudged a little, maybe it ate a leaf and got bigger... or smaller. Perhaps this place has negative matter. Nevertheless, since $\bug$ changed, $\snail$, which depends on $\bug$, must also change by $\pder{\snail}{\bug}$. We use a partial derivative here because we only want what $\bug$ did to $\snail$, not what every bug did to it. For the entire sequence of bugs, we will be following a path from $\bug$ to $\snail$, as $\bug$ is the bug we are differentiating with respect to. A good way to view this is a dependency tree;
+$$\bug \rightarrow \snail$$
+$$\bug \rightarrow \ant \rightarrow \snail$$
+$$\bug \rightarrow \ant \rightarrow \bee \rightarrow \snail $$
+Continuing the \textbf{chain} (thus the name of this rule I secretly just explained, the \textbf{chain rule}), $\ant$ also changes due to $\bug$ by $\der{\ant}{\bug}$. We use an ordinary derivative here because the only bug $\ant$ depends on is $\bug$, so it doesn't matter if we take a partial or ordinary derivative. Following the trend, $\bee$ also changes due to $\bug$, but because it relies on $\ant$, which itself changes due to $\bug$. Here, $\bee$ changes by $\der{\bee}{\ant}\der{\ant}{\bug}$. We use ordinary derivatives here for the same reason as before.
+
+You may think, $\snail$ depends on all of these bugs, so it should also be changed due to $\ant$ and $\bee$. Indeed, we can do what we did with the $\bug$ term, and change $\snail$ by $\pder{\snail}{\ant}$ and $\pder{\snail}{\bee}$. These are partial derivatives for aforementioned reason in the last paragraph. We must multiply each $\pder{\snail}{x}$ by how the bug placed in $x$'s place changes with respect to $\bug$, as those bugs change indirectly when $\bug$ changes.
+
+Now that we've got every term resolved, we can construct our derivative;
+$$\der{\snail}{\bug} = \pder{\snail}{\bug} + \pder{\snail}{\ant}\der{\ant}{\bug} + \pder{\snail}{\bee}\der{\bee}{\bug}$$
+Also, notice how $\der{\bee}{\ant}\der{\ant}{\bug}$ neatly simplifies to $\der{\bee}{\bug}$, like how a pair of fractions with a matching numerator and denominator cancel out. There are many cases in which these fraction-like behaviours will occur, the beauty of this notation.
+
+Let us get to solving these terms now.
+$$\pder{\snail}{\bug} = 9\bug^2$$
+$$\pder{\snail}{\ant} = -4\ant$$
+$$\pder{\snail}{\bee} = 4$$
+Here, I simply used the power rule, mentioned in the previous episode. $3\bug^3$, $-2\ant^2$ and $4\bee$ become their respective terms above. We can use this same rule to find the rest of our terms.
+$$\der{\ant}{\bug} = 2\bug$$
+$$\der{\bee}{\bug} = -2\bug$$
+$\bee$ is defined as $-\ant$, so we can just take the negative derivative of $\ant$ with respect to $\bug$ for the derivative of $\bee$ with respect to $\bug$. You'll notice this would be the same result as solving $\der{\bee}{\ant}\der{\ant}{\bug}$, as it evaluates to $-1 \times 2\bug$. Substituting these for the terms in our main derivative, we get;
+$$\der{\snail}{\bug} = 9\bug^2 - 8\bug\ant - 8\bug$$
+Here, we can substitute $\ant$ for its definition to simplify the equation;
+$$\der{\snail}{\bug} = 9\bug^2 - 8\bug(\bug^2) - 8\bug$$
+$$= 9\bug^2 - 8\bug^3 - 8\bug$$
+Great, we have solved the derivative! If you're feeling extra special, or you're just very cool like me, you'll transform this cubic equation into its standard form.
+$$\der{\snail}{\bug} = -8\bug^3 + 9\bug^2 - 8\bug$$
+You may also factor the result as follows, but beware that this will officially make you a \textit{nerd};
+$$\der{\snail}{\bug} = -\bug(8\bug^2 - 9\bug + 8)$$
+
+\end{document}
