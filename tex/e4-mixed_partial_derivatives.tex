@@ -1,0 +1,74 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage{graphicx}
+\usepackage{amsmath}
+\usepackage{emoji}
+
+\title{Mixed Partial Derivatives}
+\author{Explained with Bugs}
+\date{}
+
+\begin{document}
+
+% Ordinary derivative.
+\DeclareRobustCommand{\der}[2]{\frac{\text{d} #1}{\text{d} #2}}
+
+% Partial derivative.
+\DeclareRobustCommand{\pder}[2]{\frac{\partial #1}{\partial #2}}
+
+% Higher ordinary derivative.
+\DeclareRobustCommand{\hder}[3]{\frac{\text{d}^#3 #1}{\text{d} #2^#3}}
+
+% Higher partial derivative.
+\DeclareRobustCommand{\hpder}[3]{\frac{\partial^#3 #1}{\partial #2^#3}}
+
+% Mixed partial derivative.
+\DeclareRobustCommand{\mpder}[3]{\frac{\partial^#3 #1}{\partial #2}}
+
+% Math shortcut for \emoji{bug}
+\DeclareRobustCommand{\bug}{\text{\emoji{bug}}}
+
+% Math shortcut for \emoji{snail}
+\DeclareRobustCommand{\snail}{\text{\emoji{snail}}}
+
+% Math shortcut for \emoji{ant}
+\DeclareRobustCommand{\ant}{\text{\emoji{ant}}}
+
+\maketitle
+
+What happens if we differentiate a function with respect to multiple bugs at a time and in different orders? In the end, you could say this is relatively simple, because we'll basically be doing exactly what we did in the last episode---the process will be just as unintuitive too. Let us begin by defining $\snail$ as a function of $\bug$ and $\ant$;
+$$\snail = 3\bug^2\ant^3 - 4\bug\ant$$
+This definition might look a bit intimidating at first, as I believe we have't seen anything quite like it so far, but don't worry, as we'll make it work. For our first problem, we'll be finding the derivative of $\snail$ with respect to $\bug$, then $\ant$, denoted as follows;
+$$\mpder{\snail}{\bug \partial \ant}{2}$$
+The whole equation in its multivariable form;
+$$\mpder{\snail}{\bug \partial \ant}{2} = \pder{}{\ant}(\pder{\snail}{\bug})$$
+I've placed the $\bug$-derivative in parenthesis to show that the $\ant$-derivative acts on the result of that first derivative, like a follow-up operation. You'll notice the left side has essentially just been expanded into two successive steps: the first differentiating with respect to $\bug$, and the second differentiating that result with respect to $\ant$. This demonstrates another cheaty case of the Leibniz notation telling us the answer directly. Additionally, this is essentially what we did with \textit{Higher Differentiation}---repeated differentiation---just with different respective bugs this time. Without much to further explain, let's proceed with solving.
+
+We will first solve... the first step. I'm afraid the order will be rather predictable, as you can tell. 
+$$\pder{\snail}{\bug} = \pder{(3\bug^2\ant^3)}{\bug} + \pder{(-4\bug\ant)}{\bug}$$
+Heed my warning that our result will look rather strange, but if you recall the fact that $\ant$ is being treated as a constant, things will fall more nicely into place. As before, we will be using the power rule;
+$$\pder{\snail}{\bug} = 6\bug\ant^3 - 4\ant$$
+Now, for our second step. We can split the derivative with respect to $\ant$ into two terms;
+$$\mpder{\snail}{\bug \partial \ant}{2} = \pder{(6\bug\ant^3)}{\ant} + \pder{(-4\ant)}{\ant}$$
+Here, $\bug$ will be treated as a constant. Our result is as follows;
+$$\mpder{\snail}{\bug \partial \ant}{2} = 18\bug\ant^2 - 4$$
+
+Ah, now comes the rather head-turning part. When it comes to the symmetry of results when operating in different orders, mixed derivatives like to be a little
+$$\sqrt{}$$
+Get it?
+
+We'll be doing the exact same steps, just in reverse order.
+$$\mpder{\snail}{\ant \partial \bug}{2} = \pder{}{\bug}(\pder{\snail}{\ant})$$
+Our first step will instead be to take the partial derivative of $\snail$ with respect to $\ant$;
+$$\pder{\snail}{\ant} = \pder{(3\bug^2\ant^3)}{\ant} \pder{(-4\bug\ant)}{\ant}$$
+We'll just use the power rule again, and now treating $\bug$ as a constant.
+$$\pder{\snail}{\ant} = 9\bug^2\ant^2 - 4\bug$$
+And for our second step;
+$$\mpder{\snail}{\ant \partial \bug}{2} = \pder{(9\bug^2\ant^2)}{\bug} + \pder{(-4\bug)}{\bug}$$
+Power rule treating $\ant$ as a constant;
+$$\mpder{\snail}{\ant \partial \bug}{2} = 18\bug\ant^2 - 4$$
+Now, we can see the little secret of these mixed partial derivatives. If our function is nice and smooth (continuous), which our example certainly is, then the order of the differentiation will not matter. This phenomenon is known as Clairaut's principle;
+$$\mpder{\snail}{\bug \partial \ant}{2} = \mpder{\snail}{\ant \partial \bug}{2}$$
+I'll admit, the original point of this episode was to show an example where the different order results are not equal... but since our function was well-behaved, we can just ignore that and pretend my intention was to demonstrate this principle all along, yes? Excellent.
+
+\end{document}
