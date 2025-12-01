@@ -1,4 +1,4 @@
-# Explained with Bugs
+# Explained with Bugs 🐛
 Calculus explained with bugs.
 Beware of bad jokes!!!
 
